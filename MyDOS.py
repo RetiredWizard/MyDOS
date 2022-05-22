@@ -1,4 +1,4 @@
-import os, sys
+import os
 from time import localtime
 try:
     import storage
