@@ -1,4 +1,17 @@
-import os, time, sys, storage
+import os, sys, storage
+from time import localtime
+
+def txtFileTime(fPath):
+    retTime = localtime(max(min(2145916800,os.stat(fPath)[9]),946684800))
+    fTime = []
+    fTime.append(retTime[1])
+    fTime.append(retTime[2])
+    fTime.append(retTime[0])
+    fTime.append(retTime[3])
+    fTime.append(retTime[4])
+    return(fTime)
+
+
 cmd = ""
 os.chdir("/")
 while (1 == 1):
@@ -13,30 +26,21 @@ while (1 == 1):
         print(".."+" "*22+"<DIR>")
         for dir in os.listdir():
             if os.stat(dir)[0] & (2**15)== 0:
-                fTime = []
-                fTime = [0,0,0,0,0]
-#                fTime.append(time.localtime(os.stat(dir)[9])[2])
-#                fTime.append(time.localtime(os.stat(dir)[9])[1])
-#                fTime.append(time.localtime(os.stat(dir)[9])[0])
-#                fTime.append(time.localtime(os.stat(dir)[9])[3])
-#                fTime.append(time.localtime(os.stat(dir)[9])[4])
+                fTime = txtFileTime(dir)
                 print(dir+" "*(24-len(dir))+"<DIR>"+" "*18+"%2.2i-%2.2i-%4.4i %2.2i:%2.2i" % (fTime[0], fTime[1], fTime[2], fTime[3], fTime[4]))
                 nDirs += 1
 
         tFSize = 0
-#        availDisk = os.statvfs("/")[1]*os.statvfs("/")[4]
-        availDisk = 0
+        tmpDir = os.getcwd()
+        try:
+            availDisk = os.statvfs(tmpDir)[1]*os.statvfs(tmpDir)[4]
+        except:
+            availDisk = 0
         for dir in os.listdir():
             if os.stat(dir)[0] & (2**15) != 0:
                 fSize = str(os.stat(dir)[6])
                 tFSize += os.stat(dir)[6]
-                fTime = []
-                fTime = [0,0,0,0,0]
-#                fTime.append(time.localtime(os.stat(dir)[9])[2])
-#                fTime.append(time.localtime(os.stat(dir)[9])[1])
-#                fTime.append(time.localtime(os.stat(dir)[9])[0])
-#                fTime.append(time.localtime(os.stat(dir)[9])[3])
-#                fTime.append(time.localtime(os.stat(dir)[9])[4])
+                fTime = txtFileTime(dir)
                 print(dir+" "*(35-len(dir)+10-len(fSize)),fSize,"%2.2i-%2.2i-%4.4i %2.2i:%2.2i" % (fTime[0], fTime[1], fTime[2], fTime[3], fTime[4]))
                 nFiles += 1
 
