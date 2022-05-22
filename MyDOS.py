@@ -1,5 +1,9 @@
-import os, sys, storage
+import os, sys
 from time import localtime
+try:
+    import storage
+except:
+    pass
 
 def txtFileTime(fPath):
     retTime = localtime(max(min(2145916800,os.stat(fPath)[9]),946684800))
