@@ -1,9 +1,5 @@
 import os
 from time import localtime
-try:
-    import storage
-except:
-    pass
 
 def txtFileTime(fPath):
     retTime = localtime(max(min(2145916800,os.stat(fPath)[9]),946684800))
@@ -14,7 +10,6 @@ def txtFileTime(fPath):
     fTime.append(retTime[3])
     fTime.append(retTime[4])
     return(fTime)
-
 
 cmd = ""
 os.chdir("/")
@@ -129,12 +124,6 @@ while (1 == 1):
 
     elif cmd == "":
         continue
-
-    elif cmd == "FSRO":
-        storage.remount("/",True)
-
-    elif cmd == "FSRW":
-        storage.remount("/",False)
 
     else:
         if args[0] in os.listdir() and os.stat(args[0])[0] & (2**15)!= 0 and ((args[0].split("."))[1]).upper() == "PY":
